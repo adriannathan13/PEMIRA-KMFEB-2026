@@ -669,7 +669,7 @@
 
     const DEFAULT_TITLE = 'PEMIRA KM FEB-UNTAD 2026';
     const DEFAULT_SUBTITLE = 'Sistem e-Voting Resmi BEM & DPM Fakultas Ekonomi dan Bisnis';
-    const DEFAULT_LOGO = '';
+    const DEFAULT_LOGO = 'logo-dpm.png';
     const BRAND_STORAGE_KEY = 'pemira_feb_branding_v2';
 
     let pendingLogoData = '';
@@ -696,7 +696,7 @@
       targets.forEach(box => {
         if (!box) return;
         if (logoSrc && logoSrc.trim()) {
-          box.innerHTML = `<img src="${logoSrc.trim()}" alt="Logo DPM" />`;
+          box.innerHTML = `<img src="${logoSrc.trim()}" alt="Logo DPM" onerror="this.parentNode.innerHTML='DPM'" />`;
         } else {
           box.innerHTML = 'DPM';
         }
@@ -799,15 +799,15 @@
       try {
         localStorage.removeItem(BRAND_STORAGE_KEY);
       } catch (e) {}
-      pendingLogoData = '';
+      pendingLogoData = DEFAULT_LOGO;
       document.getElementById('inputLogoFile').value = '';
-      document.getElementById('inputLogoUrl').value = '';
+      document.getElementById('inputLogoUrl').value = DEFAULT_LOGO;
       document.getElementById('headerTitleText').innerText = DEFAULT_TITLE;
       document.getElementById('headerSubtitleText').innerText = DEFAULT_SUBTITLE;
       document.title = 'Bilik Suara ' + DEFAULT_TITLE;
       document.getElementById('inputHeaderTitle').value = DEFAULT_TITLE;
       document.getElementById('inputHeaderSubtitle').value = DEFAULT_SUBTITLE;
-      renderLogoTargets('');
+      renderLogoTargets(DEFAULT_LOGO);
       alert('Tulisan header dan logo dikembalikan ke bawaan.');
     }
 
