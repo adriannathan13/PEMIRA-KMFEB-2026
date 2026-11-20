@@ -3,110 +3,151 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bilik Suara Pemira KM FEB-UNTAD 2026</title>
+  <title>Bilik Suara PEMIRA KM FEB-UNTAD 2026</title>
   <style>
     :root {
-      --dpm-red: #c81e1e;
-      --dpm-red-dark: #991b1b;
-      --dpm-red-soft: #fef2f2;
-      --dpm-red-border: #fecaca;
+      --red-dark: #7F1D1D;
+      --red-maroon: #991B1B;
+      --red-main: #C81E1E;
+      --red-hover: #9B1C1C;
+      --red-soft: #FEF2F2;
+      --red-soft-2: #FFF5F5;
+      --red-border: #FECACA;
+      --bg-page: #FFF8F8;
+      --text-main: #1F2937;
+      --text-muted: #6B7280;
+      --card-bg: #FFFFFF;
+      --line: #E5E7EB;
     }
-    * { box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
-    body { margin: 0; background: #f8fafc; color: #0f172a; }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg-page);
+      color: var(--text-main);
+    }
+
+    header.topbar {
+      background: linear-gradient(90deg, var(--red-dark), var(--red-maroon), var(--red-main));
+      color: #FFFFFF;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      box-shadow: 0 2px 10px rgba(153, 27, 27, 0.22);
+    }
+
+    header.topbar h1 {
+      margin: 0;
+      font-size: 19px;
+      font-weight: 700;
+    }
+
+    header.topbar small {
+      display: block;
+      color: #FEE2E2;
+      font-size: 12px;
+      margin-top: 2px;
+    }
+
+    .container {
+      max-width: 1120px;
+      margin: 24px auto;
+      padding: 0 16px 48px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--red-border);
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 4px 14px rgba(153, 27, 27, 0.05);
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-red {
+      background: var(--red-main);
+      color: #FFFFFF;
+    }
+
+    .btn-red:hover { background: var(--red-hover); }
+
+    .btn-outline-red {
+      background: #FFFFFF;
+      color: var(--red-maroon);
+      border: 1px solid var(--red-maroon);
+    }
+
+    .btn-outline-red:hover { background: var(--red-soft); }
+
+    .btn-secondary {
+      background: #F3F4F6;
+      color: #1F2937;
+      border: 1px solid #D1D5DB;
+    }
+
+    .btn-secondary:hover { background: #E5E7EB; }
+
+    .btn-sm { padding: 6px 11px; font-size: 12px; }
+
+    .hidden { display: none !important; }
 
     .login-wrap {
-      min-height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 20px;
-      background: linear-gradient(135deg, var(--dpm-red-dark), var(--dpm-red));
+      gap: 20px;
     }
+
     .login-card {
       width: 100%;
-      max-width: 860px;
-      background: #fff;
-      border-radius: 18px;
-      overflow: hidden;
-      display: grid;
-      grid-template-columns: 1fr 1.05fr;
-      box-shadow: 0 22px 45px rgba(15, 23, 42, 0.28);
+      max-width: 460px;
     }
-    .login-left {
-      background: var(--dpm-red-dark);
-      color: #fff;
-      padding: 36px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+
+    .field {
+      margin-bottom: 14px;
     }
-    .logo-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 18px;
-    }
-    .logo-img {
-      width: 58px;
-      height: 58px;
-      object-fit: contain;
-      background: #fff;
-      border-radius: 50%;
-      padding: 4px;
-      border: 2px solid #fca5a5;
-    }
-    .login-right {
-      padding: 36px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    label {
+
+    .field label {
       display: block;
       font-size: 13px;
       font-weight: 600;
+      color: var(--red-dark);
       margin-bottom: 6px;
-      color: #334155;
     }
-    input, select {
+
+    .field input, .field select {
       width: 100%;
-      padding: 11px 13px;
-      border: 1px solid #cbd5e1;
-      border-radius: 9px;
-      margin-bottom: 14px;
+      padding: 10px 12px;
+      border: 1px solid #D1D5DB;
+      border-radius: 8px;
       font-size: 14px;
     }
-    input:focus, select:focus {
+
+    .field input:focus, .field select:focus {
       outline: none;
-      border-color: var(--dpm-red);
+      border-color: var(--red-main);
+      box-shadow: 0 0 0 3px rgba(200, 30, 30, 0.12);
     }
-    .btn {
-      padding: 11px 16px;
-      border: none;
-      border-radius: 9px;
-      background: var(--dpm-red);
-      color: #fff;
-      font-weight: 700;
-      font-size: 14px;
-      cursor: pointer;
-    }
-    .btn:hover { background: var(--dpm-red-dark); }
-    .btn:disabled { opacity: 0.6; cursor: not-allowed; }
-    .btn-block { width: 100%; padding: 13px 16px; font-size: 15px; }
-    .btn-secondary { background: #334155; color: #fff; }
-    .btn-secondary:hover { background: #1e293b; }
-    .btn-outline-red {
-      background: var(--dpm-red-soft);
-      color: var(--dpm-red-dark);
-      border: 1px solid var(--dpm-red-border);
-    }
-    .btn-outline-red:hover { background: #fee2e2; }
-    .btn-sm { padding: 6px 11px; font-size: 12px; border-radius: 7px; }
 
     .err-box {
-      background: var(--dpm-red-soft);
-      color: var(--dpm-red-dark);
-      border: 1px solid var(--dpm-red-border);
+      background: #FEF2F2;
+      border: 1px solid #FCA5A5;
+      color: #991B1B;
       padding: 10px 12px;
       border-radius: 8px;
       font-size: 13px;
@@ -114,357 +155,401 @@
       display: none;
     }
 
-    .secret-admin-trigger { margin-top: 16px; text-align: center; }
-    .secret-btn {
-      background: none;
-      border: none;
-      color: #94a3b8;
-      font-size: 11px;
-      cursor: pointer;
-      text-decoration: underline;
-    }
-    .secret-btn:hover { color: var(--dpm-red); }
-
-    .booth-wrap { display: none; min-height: 100vh; padding: 24px 16px; }
-    .booth-box {
-      max-width: 780px;
-      margin: 0 auto;
-      background: #fff;
-      border-radius: 16px;
-      padding: 24px;
-      border: 1px solid #e2e8f0;
-      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
-    }
-    .booth-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid #e2e8f0;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-    .voter-badge {
-      background: var(--dpm-red-soft);
-      border: 1px solid var(--dpm-red-border);
-      color: var(--dpm-red-dark);
-      padding: 12px 14px;
-      border-radius: 10px;
-      margin-bottom: 18px;
-      font-size: 14px;
-    }
-    .section-title {
-      background: #fff5f5;
-      border-left: 4px solid var(--dpm-red);
-      padding: 10px 14px;
-      font-weight: 700;
-      font-size: 15px;
-      margin: 18px 0 12px;
-      border-radius: 0 8px 8px 0;
-      color: var(--dpm-red-dark);
-    }
-    .cand-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 12px;
-    }
-    .cand-card {
-      border: 2px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 14px;
-      cursor: pointer;
-      transition: 0.15s;
-    }
-    .cand-card:hover { border-color: #fca5a5; }
-    .cand-card.selected { border-color: var(--dpm-red); background: var(--dpm-red-soft); }
-
-    .admin-wrap { display: none; min-height: 100vh; }
-    .sidebar {
-      width: 245px;
-      background: #fff;
-      border-right: 1px solid #e2e8f0;
-      padding: 20px 14px;
-      display: flex;
-      flex-direction: column;
-    }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 800;
-      color: var(--dpm-red-dark);
-      font-size: 16px;
-      margin-bottom: 22px;
-      padding: 0 6px;
-    }
-    .nav-btn {
-      text-align: left;
+    .live-panel {
       width: 100%;
-      padding: 10px 12px;
-      border: none;
-      background: transparent;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 600;
-      color: #475569;
-      cursor: pointer;
-      margin-bottom: 4px;
+      max-width: 960px;
     }
-    .nav-btn.active, .nav-btn:hover { background: var(--dpm-red-soft); color: var(--dpm-red); }
-    .main { flex: 1; padding: 24px; }
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-bottom: 20px;
-    }
-    .stat-box {
-      background: #fff;
-      padding: 18px;
-      border-radius: 12px;
-      border: 1px solid #e2e8f0;
-      border-top: 3px solid var(--dpm-red);
-    }
-    .stat-num { font-size: 28px; font-weight: 800; margin-top: 6px; color: #0f172a; }
-    .panel {
-      background: #fff;
-      padding: 20px;
-      border-radius: 12px;
-      border: 1px solid #e2e8f0;
-      margin-bottom: 16px;
-      overflow-x: auto;
-    }
-    .panel-head {
+
+    .live-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 12px;
       flex-wrap: wrap;
+      gap: 10px;
       margin-bottom: 14px;
     }
-    .token-group { display: flex; gap: 6px; align-items: center; }
-    .token-group input { margin-bottom: 0; }
-    table { width: 100%; border-collapse: collapse; font-size: 14px; }
-    th, td { text-align: left; padding: 10px; border-bottom: 1px solid #e2e8f0; }
-    th { background: #fff5f5; color: var(--dpm-red-dark); font-size: 13px; }
-    .pct-bar-wrap {
-      width: 110px;
-      height: 8px;
-      background: #fee2e2;
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .kpi-card {
+      background: var(--red-soft);
+      border: 1px solid var(--red-border);
+      border-radius: 10px;
+      padding: 14px;
+    }
+
+    .kpi-label { font-size: 12px; color: var(--red-dark); font-weight: 600; }
+    .kpi-val { font-size: 24px; font-weight: 800; color: var(--red-maroon); margin-top: 4px; }
+
+    .live-item {
+      border: 1px solid var(--red-border);
+      background: #FFFFFF;
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+    }
+
+    .live-item-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .badge-red {
+      background: #FEE2E2;
+      color: var(--red-maroon);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 999px;
+      margin-right: 6px;
+    }
+
+    .bar-track {
+      width: 100%;
+      height: 10px;
+      background: #FEE2E2;
       border-radius: 999px;
       overflow: hidden;
-      display: inline-block;
-      vertical-align: middle;
-      margin-right: 8px;
     }
-    .pct-bar { height: 100%; background: var(--dpm-red); }
-    .hidden { display: none; }
 
-    @media (max-width: 768px) {
-      .login-card { grid-template-columns: 1fr; }
-      .stats { grid-template-columns: 1fr; }
-      .admin-wrap.flex { flex-direction: column; }
-      .sidebar { width: 100%; }
+    .bar-fill {
+      height: 100%;
+      background: var(--red-main);
+      transition: width 0.35s ease;
+    }
+
+    .cand-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 14px;
+      margin-top: 12px;
+    }
+
+    .cand-card {
+      border: 2px solid var(--line);
+      border-radius: 12px;
+      padding: 16px;
+      cursor: pointer;
+      background: #FFFFFF;
+      transition: all 0.15s ease;
+    }
+
+    .cand-card:hover { border-color: var(--red-main); background: var(--red-soft-2); }
+    .cand-card.selected { border-color: var(--red-maroon); background: var(--red-soft); }
+
+    .admin-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .admin-tab-btn.active {
+      background: var(--red-maroon);
+      color: #FFFFFF;
+      border-color: var(--red-maroon);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    th {
+      background: var(--red-maroon);
+      color: #FFFFFF;
+      text-align: left;
+      padding: 10px 12px;
+    }
+
+    td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #F3F4F6;
+    }
+
+    tr:nth-child(even) td { background: var(--red-soft-2); }
+
+    .row-form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 10px;
+      align-items: end;
+      margin-bottom: 14px;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 999;
+    }
+
+    .modal-box {
+      background: #FFFFFF;
+      border-radius: 14px;
+      padding: 22px;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
     }
   </style>
 </head>
 <body>
+  <header class="topbar">
+    <div>
+      <h1>PEMIRA KM FEB-UNTAD 2026</h1>
+      <small>Sistem e-Voting Resmi BEM &amp; DPM Fakultas Ekonomi dan Bisnis</small>
+    </div>
+    <div style="display:flex; gap:8px; align-items:center;">
+      <button type="button" class="btn btn-outline-red btn-sm" onclick="openSuperAdminPrompt()">Akses Super Admin</button>
+    </div>
+  </header>
 
-  <!-- 1. HALAMAN UTAMA: BILIK SUARA PEMILIH -->
-  <div id="voterLoginView" class="login-wrap">
-    <div class="login-card">
-      <div class="login-left">
-        <div class="logo-row">
-          <img src="Logo DPM.jpg" alt="Logo DPM FEB UNTAD" class="logo-img" onerror="this.style.display='none'" />
-        </div>
-        <h1 style="margin:0 0 10px;font-size:26px;">Bilik Suara PEMIRA</h1>
-        <p style="margin:0;color:#fecaca;line-height:1.55;font-size:14px;">
-          KM FEB-UNTAD 2026. Masukkan NIM dan Token sekali pakai dari panitia untuk membuka surat suara sesuai Jurusan Anda.
-        </p>
-      </div>
-
-      <div class="login-right">
-        <h2 style="margin:0 0 6px;">Masuk Bilik Suara</h2>
-        <p style="margin:0 0 16px;color:#64748b;font-size:13px;">1 Mahasiswa = 1 Hak Suara (Tersinkronisasi Google Sheets)</p>
+  <main class="container">
+    <!-- 1. HALAMAN UTAMA: BILIK SUARA PEMILIH & LIVE PERSENTASE -->
+    <section id="voterLoginView" class="login-wrap">
+      <div class="card login-card">
+        <h2 style="margin:0 0 6px; color:var(--red-maroon);">Login Bilik Suara Pemilih</h2>
+        <p style="margin:0 0 16px; font-size:13px; color:var(--text-muted);">Masukkan NIM dan Kode Token 6 digit yang terdaftar di DPT.</p>
 
         <div id="voterErr" class="err-box"></div>
 
-        <label>Nomor Induk Mahasiswa (NIM)</label>
-        <input type="text" id="loginNim" placeholder="Contoh: C20124002" autocomplete="off" />
-
-        <label>Kode Token (6 Digit)</label>
-        <input type="password" id="loginToken" placeholder="Masukkan token dari panitia" autocomplete="off" />
-
-        <button id="btnVoterLogin" class="btn btn-block" onclick="voterLogin()">BUKA SURAT SUARA SAYA →</button>
-
-        <div class="secret-admin-trigger">
-          <button type="button" class="secret-btn" onclick="openSuperAdminPrompt()">Akses Super Admin</button>
+        <div class="field">
+          <label for="loginNim">NIM</label>
+          <input id="loginNim" type="text" placeholder="Contoh: C20124002" />
         </div>
+        <div class="field">
+          <label for="loginToken">Token 6 Digit</label>
+          <input id="loginToken" type="text" maxlength="6" placeholder="Contoh: 123456" />
+        </div>
+        <button id="btnLoginVoter" type="button" class="btn btn-red" style="width:100%;" onclick="handleVoterLogin()">Masuk ke Bilik Suara</button>
       </div>
-    </div>
-  </div>
 
-  <!-- 2. HALAMAN SURAT SUARA PEMILIH -->
-  <div id="boothView" class="booth-wrap">
-    <div class="booth-box">
-      <div class="booth-header">
-        <div style="display:flex;align-items:center;gap:12px;">
-          <img src="Logo DPM.jpg" alt="Logo DPM FEB UNTAD" class="logo-img" style="width:46px;height:46px;" onerror="this.style.display='none'" />
+      <!-- PANEL LIVE PERSENTASE DI MENU AWAL -->
+      <div class="card live-panel">
+        <div class="live-header">
           <div>
-            <h2 style="margin:0;font-size:19px;">Surat Suara Pemira KM FEB-UNTAD 2026</h2>
-            <div style="font-size:12px;color:#64748b;">Pastikan pilihan BEM dan DPM sudah sesuai sebelum dikirim</div>
+            <h3 style="margin:0; color:var(--red-maroon);">Live Persentase Suara (Real-Time)</h3>
+            <small style="color:var(--text-muted);">Pemantauan langsung partisipasi pemilih &amp; perolehan suara PEMIRA KM FEB-UNTAD 2026</small>
+          </div>
+          <button type="button" class="btn btn-outline-red btn-sm" onclick="loadPublicLiveStats()">Perbarui Live Data</button>
+        </div>
+
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-label">Total DPT Terdaftar</div>
+            <div id="pubStatDpt" class="kpi-val">0</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Suara Sah Masuk</div>
+            <div id="pubStatVote" class="kpi-val">0</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Partisipasi Pemilih</div>
+            <div id="pubStatPct" class="kpi-val">0.0%</div>
           </div>
         </div>
-        <button class="btn btn-secondary btn-sm" onclick="exitBooth()">Batal / Keluar</button>
+
+        <div id="pubLiveCandList">
+          <div style="color:var(--text-muted); font-size:14px;">Memuat data live persentase...</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. HALAMAN BILIK SUARA -->
+    <section id="boothView" class="hidden">
+      <div class="card" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+        <div>
+          <h2 style="margin:0; color:var(--red-maroon);">Bilik Suara Aktif</h2>
+          <div id="voterInfoText" style="font-size:13px; color:var(--text-muted); margin-top:4px;"></div>
+        </div>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="exitBooth()">Keluar</button>
       </div>
 
-      <div class="voter-badge">
-        Pemilih: <strong id="bNama"></strong> (<span id="bNim"></span>) • Jurusan: <strong id="bProdi"></strong>
+      <div class="card">
+        <h3 style="margin:0 0 4px; color:var(--red-dark);">1. Pilih Paslon BEM FEB</h3>
+        <div id="bemList" class="cand-grid"></div>
       </div>
 
-      <div class="section-title">1. Calon Ketua &amp; Wakil Ketua BEM FEB-UNTAD</div>
-      <div id="bemCards" class="cand-grid"></div>
-
-      <div class="section-title">2. Calon Anggota DPM — Jurusan <span id="bDapilLabel"></span></div>
-      <div id="dpmCards" class="cand-grid"></div>
-
-      <button id="btnConfirmVote" class="btn btn-block" style="margin-top:22px;padding:14px;" onclick="confirmVote()">SAHKAN &amp; KIRIM SUARA</button>
-    </div>
-  </div>
-
-  <!-- 3. DASHBOARD SUPER ADMIN -->
-  <div id="adminView" class="admin-wrap">
-    <aside class="sidebar">
-      <div class="brand">
-        <img src="Logo DPM.jpg" alt="Logo DPM" class="logo-img" style="width:36px;height:36px;" onerror="this.style.display='none'" />
-        <span>SUPER ADMIN</span>
+      <div class="card">
+        <h3 style="margin:0 0 4px; color:var(--red-dark);">2. Pilih Calon Anggota DPM (Sesuai Jurusan)</h3>
+        <div id="dpmList" class="cand-grid"></div>
       </div>
-      <button class="nav-btn active" onclick="showAdminTab('dash', this)">Dashboard</button>
-      <button class="nav-btn" onclick="showAdminTab('dpt', this)">Data Pemilih (DPT)</button>
-      <button class="nav-btn" onclick="showAdminTab('cand', this)">Data Kandidat</button>
-      <button class="nav-btn" onclick="showAdminTab('security', this)">Kode Super Admin</button>
-      <button class="nav-btn" style="margin-top:auto;color:var(--dpm-red);" onclick="logoutAdmin()">Keluar ke Bilik Suara</button>
-    </aside>
 
-    <main class="main">
-      <div id="atab-dash">
-        <div class="panel-head">
-          <h2 style="margin:0;">Dashboard Rekapitulasi (Live Google Sheets)</h2>
-          <button class="btn btn-outline-red btn-sm" onclick="syncAdminData()">↻ Segarkan Data</button>
-        </div>
-        <div class="stats">
-          <div class="stat-box"><div style="color:#64748b;font-size:13px;">Total DPT Terdaftar</div><div id="aStatDpt" class="stat-num">0</div></div>
-          <div class="stat-box"><div style="color:#64748b;font-size:13px;">Total Kandidat</div><div id="aStatCand" class="stat-num">0</div></div>
-          <div class="stat-box"><div style="color:#64748b;font-size:13px;">Suara Sah Masuk</div><div id="aStatVote" class="stat-num">0</div></div>
-        </div>
+      <div style="text-align:right;">
+        <button id="btnOpenConfirm" type="button" class="btn btn-red" onclick="openVoteConfirm()">Sahkan &amp; Kirim Suara</button>
+      </div>
+    </section>
 
-        <div class="panel">
-          <h3 style="margin-top:0;">Persentase Perolehan Suara Tiap Paslon / Kandidat</h3>
-          <table>
-            <thead>
-              <tr>
-                <th>Kategori</th>
-                <th>Jurusan / Dapil</th>
-                <th>Nama Paslon / Kandidat</th>
-                <th>Suara</th>
-                <th>Persentase Suara</th>
-              </tr>
-            </thead>
-            <tbody id="dashCandPctBody"></tbody>
-          </table>
+    <!-- 3. HALAMAN SUPER ADMIN -->
+    <section id="adminView" class="hidden">
+      <div class="card" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+        <div>
+          <h2 style="margin:0; color:var(--red-maroon);">Dashboard Super Admin</h2>
+          <small style="color:var(--text-muted);">Kelola DPT, Data Kandidat, dan Rekapitulasi Suara</small>
         </div>
-
-        <div class="panel">
-          <h3 style="margin-top:0;">Persentase DPT Sudah Memilih per Jurusan</h3>
-          <table>
-            <thead>
-              <tr>
-                <th>Jurusan</th>
-                <th>Sudah Memilih</th>
-                <th>Total DPT Jurusan</th>
-                <th>Persentase Memilih</th>
-              </tr>
-            </thead>
-            <tbody id="dashProdiPctBody"></tbody>
-          </table>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <button type="button" class="btn btn-outline-red btn-sm" onclick="syncAdminData()">Segarkan Data</button>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="logoutAdmin()">Keluar Admin</button>
         </div>
       </div>
 
-      <div id="atab-dpt" class="panel hidden">
-        <div class="panel-head">
-          <h3 style="margin:0;">Input &amp; Ekspor Data Pemilih (DPT)</h3>
-          <button class="btn btn-outline-red btn-sm" onclick="exportDptToExcel()">⬇ Ekspor DPT ke Excel (.CSV)</button>
-        </div>
+      <div class="admin-tabs">
+        <button type="button" id="tabBtn-dash" class="btn btn-outline-red btn-sm admin-tab-btn active" onclick="showAdminTab('dash', this)">Dashboard Rekap</button>
+        <button type="button" id="tabBtn-dpt" class="btn btn-outline-red btn-sm admin-tab-btn" onclick="showAdminTab('dpt', this)">Data Pemilih (DPT)</button>
+        <button type="button" id="tabBtn-cand" class="btn btn-outline-red btn-sm admin-tab-btn" onclick="showAdminTab('cand', this)">Data Kandidat</button>
+      </div>
 
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-bottom:14px;">
-          <input type="text" id="inNim" placeholder="NIM (misal: C10124002)" style="margin:0;" />
-          <input type="text" id="inNama" placeholder="Nama Lengkap" style="margin:0;" />
-          <select id="inProdi" style="margin:0;">
-            <option>S1 Manajemen</option>
-            <option>S1 Akuntansi</option>
-            <option>S1 IESP</option>
-            <option>D3 Manajemen Pemasaran</option>
-            <option>D4 ASP</option>
-          </select>
-          <div class="token-group">
-            <input type="text" id="inToken" placeholder="Token 6 digit" maxlength="6" />
-            <button type="button" class="btn btn-secondary btn-sm" onclick="generateRandomToken()">Acak</button>
+      <!-- TAB DASHBOARD REKAP -->
+      <div id="atab-dash" class="card">
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-label">Total DPT Terdaftar</div>
+            <div id="aStatDpt" class="kpi-val">0</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Total Kandidat</div>
+            <div id="aStatCand" class="kpi-val">0</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Suara Sah Masuk</div>
+            <div id="aStatVote" class="kpi-val">0</div>
           </div>
         </div>
-        <button id="btnAddDpt" class="btn" style="padding:10px 18px;" onclick="addDpt()">+ Tambah Pemilih ke Sheets</button>
 
-        <table style="margin-top:16px;">
-          <thead><tr><th>NIM</th><th>Nama</th><th>Jurusan</th><th>Token</th><th>Status</th><th>Waktu</th></tr></thead>
+        <h3 style="color:var(--red-dark);">Perolehan Suara Tiap Kandidat</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Kategori</th>
+              <th>Jurusan / Dapil</th>
+              <th>Nama Kandidat / Paslon</th>
+              <th>Suara</th>
+              <th>Persentase</th>
+            </tr>
+          </thead>
+          <tbody id="dashCandPctBody"></tbody>
+        </table>
+
+        <h3 style="color:var(--red-dark); margin-top:24px;">Partisipasi Pemilih per Jurusan</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Jurusan</th>
+              <th>Sudah Memilih</th>
+              <th>Total DPT</th>
+              <th>Persentase</th>
+            </tr>
+          </thead>
+          <tbody id="dashProdiPctBody"></tbody>
+        </table>
+      </div>
+
+      <!-- TAB DPT -->
+      <div id="atab-dpt" class="card hidden">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
+          <h3 style="margin:0; color:var(--red-dark);">Input &amp; Ekspor Data Pemilih (DPT)</h3>
+          <button type="button" class="btn btn-outline-red btn-sm" onclick="exportDptCsv()">Ekspor DPT (.CSV)</button>
+        </div>
+
+        <div class="row-form">
+          <div class="field" style="margin:0;">
+            <label for="dptNim">NIM</label>
+            <input id="dptNim" type="text" placeholder="C20124002" />
+          </div>
+          <div class="field" style="margin:0;">
+            <label for="dptNama">Nama Lengkap</label>
+            <input id="dptNama" type="text" placeholder="Nama Mahasiswa" />
+          </div>
+          <div class="field" style="margin:0;">
+            <label for="dptProdi">Jurusan</label>
+            <select id="dptProdi"></select>
+          </div>
+          <div class="field" style="margin:0;">
+            <label for="dptToken">Token 6 Digit</label>
+            <div style="display:flex; gap:6px;">
+              <input id="dptToken" type="text" maxlength="6" placeholder="6 digit" />
+              <button type="button" class="btn btn-secondary btn-sm" onclick="generateRandomToken()">Acak</button>
+            </div>
+          </div>
+          <button type="button" class="btn btn-red" onclick="addDpt()">+ Tambah Pemilih</button>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>NIM</th>
+              <th>Nama</th>
+              <th>Jurusan</th>
+              <th>Token</th>
+              <th>Status</th>
+              <th>Waktu</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
           <tbody id="aDptBody"></tbody>
         </table>
       </div>
 
-      <div id="atab-cand" class="panel hidden">
-        <div class="panel-head">
-          <h3 style="margin:0;">Tambah &amp; Ubah Data Kandidat</h3>
-        </div>
+      <!-- TAB KANDIDAT -->
+      <div id="atab-cand" class="card hidden">
+        <h3 style="margin:0 0 12px; color:var(--red-dark);">Tambah &amp; Ubah Data Kandidat</h3>
 
-        <div style="background:#f8fafc;border:1px solid #e2e8f0;padding:14px;border-radius:10px;margin-bottom:16px;">
-          <div style="font-weight:700;color:#0f172a;margin-bottom:10px;">Tambah Kandidat Baru</div>
-          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-bottom:10px;">
-            <select id="addCandCat" style="margin:0;">
+        <div class="row-form">
+          <div class="field" style="margin:0;">
+            <label for="candCat">Kategori</label>
+            <select id="candCat" onchange="toggleCandDapil()">
               <option value="BEM">BEM</option>
               <option value="DPM">DPM</option>
             </select>
-            <select id="addCandDapil" style="margin:0;">
-              <option value="SEMUA">SEMUA</option>
-              <option value="S1 Manajemen">S1 Manajemen</option>
-              <option value="S1 Akuntansi">S1 Akuntansi</option>
-              <option value="S1 ISP">S1 ISP</option>
-              <option value="D3 Manajemen Pemasaran">D3 Manajemen Pemasaran</option>
-              <option value="D4 ISP">D4 ISP</option>
-            </select>
-            <input type="text" id="addCandName" placeholder="Nama Paslon / Kandidat baru" style="margin:0;" />
           </div>
-          <button id="btnAddCand" type="button" class="btn btn-sm" onclick="addCandidate()">+ Tambah Kandidat</button>
+          <div class="field" style="margin:0;">
+            <label for="candDapil">Jurusan / Dapil</label>
+            <select id="candDapil"></select>
+          </div>
+          <div class="field" style="margin:0;">
+            <label for="candName">Nama Paslon / Kandidat</label>
+            <input id="candName" type="text" placeholder="Nama Paslon / Kandidat baru" />
+          </div>
+          <button type="button" class="btn btn-red" onclick="addCandidate()">+ Tambah Kandidat</button>
         </div>
 
-        <div id="editCandBox" class="hidden" style="background:#fff5f5;border:1px solid #fecaca;padding:14px;border-radius:10px;margin-bottom:16px;">
-          <div style="font-weight:700;color:var(--dpm-red-dark);margin-bottom:10px;">Edit Kandidat</div>
-          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;">
-            <select id="editCat" style="margin:0;">
-              <option value="BEM">BEM</option>
-              <option value="DPM">DPM</option>
-            </select>
-            <select id="editDapil" style="margin:0;">
-              <option value="SEMUA">SEMUA</option>
-              <option value="S1 Manajemen">S1 Manajemen</option>
-              <option value="S1 Akuntansi">S1 Akuntansi</option>
-              <option value="S1 ISP">S1 ISP</option>
-              <option value="D3 Manajemen Pemasaran">D3 Manajemen Pemasaran</option>
-              <option value="D4 ISP">D4 ISP</option>
-            </select>
-            <input type="text" id="editName" placeholder="Nama Paslon / Kandidat" style="margin:0;" />
-          </div>
-          <div style="margin-top:10px;display:flex;gap:8px;">
-            <button id="btnSaveCand" type="button" class="btn btn-sm" onclick="saveEditedCandidate()">Simpan Perubahan</button>
-            <button type="button" class="btn btn-secondary btn-sm" onclick="cancelEditCandidate()">Batal</button>
+        <div id="editCandBox" class="card hidden" style="background:var(--red-soft); margin-top:14px;">
+          <h4 style="margin:0 0 10px; color:var(--red-maroon);">Edit Data Kandidat</h4>
+          <div class="row-form">
+            <div class="field" style="margin:0;">
+              <label for="editCat">Kategori</label>
+              <select id="editCat">
+                <option value="BEM">BEM</option>
+                <option value="DPM">DPM</option>
+              </select>
+            </div>
+            <div class="field" style="margin:0;">
+              <label for="editDapil">Jurusan / Dapil</label>
+              <select id="editDapil"></select>
+            </div>
+            <div class="field" style="margin:0;">
+              <label for="editName">Nama Kandidat</label>
+              <input id="editName" type="text" />
+            </div>
+            <div style="display:flex; gap:6px;">
+              <button id="btnSaveCand" type="button" class="btn btn-red" onclick="saveEditedCandidate()">Simpan Perubahan</button>
+              <button type="button" class="btn btn-secondary" onclick="cancelEditCandidate()">Batal</button>
+            </div>
           </div>
         </div>
 
@@ -480,21 +565,23 @@
           <tbody id="aCandBody"></tbody>
         </table>
       </div>
+    </section>
+  </main>
 
-      <div id="atab-security" class="panel hidden">
-        <h3 style="margin-top:0;">Pengaturan Kode Rahasia Super Admin</h3>
-        <p style="color:#64748b;font-size:13px;">Kode bawaan saat ini: <strong>ADMINFEB2026</strong>.</p>
-        <label>Kode Super Admin Baru</label>
-        <input type="text" id="newAdminCode" placeholder="Masukkan kode rahasia baru" style="max-width:320px;" />
-        <button class="btn" style="padding:10px 18px;" onclick="updateAdminCode()">Simpan Kode Baru</button>
+  <!-- MODAL KONFIRMASI SUARA -->
+  <div id="confirmModal" class="modal-backdrop">
+    <div class="modal-box">
+      <h3 style="margin:0 0 10px; color:var(--red-maroon);">Konfirmasi Pilihan Suara</h3>
+      <p id="confirmSummary" style="font-size:14px; line-height:1.5; margin:0 0 18px;"></p>
+      <div style="display:flex; justify-content:flex-end; gap:8px;">
+        <button type="button" class="btn btn-secondary" onclick="closeVoteConfirm()">Batal</button>
+        <button id="btnConfirmVote" type="button" class="btn btn-red" onclick="confirmVote()">SAHKAN &amp; KIRIM SUARA</button>
       </div>
-    </main>
+    </div>
   </div>
 
   <script>
-    // TEMPEL URL WEB APP APPS SCRIPT ANDA DI BAWAH INI:
-    const GAS_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbxUYq2YTt_hZD1dt3-6ul5XIFxfneTG5LqVVT237dUlCg8dIuZ8YIGj_c_PQ4jybXzS/exec';
-
+    const GAS_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbxTQ9JRU2Av8zfo6Zqbux-BaxJ8Xk0h5kq6xpEy7wP-iv80mlQVRjMdid98oKmcWti5/exec';
     const PRODI_LIST = [
       'S1 Manajemen',
       'S1 Akuntansi',
@@ -512,7 +599,9 @@
       activeToken: '',
       pickedBem: null,
       pickedDpm: null,
-      editingCandId: null
+      editingCandId: null,
+      voterBemList: [],
+      voterDpmList: []
     };
 
     function callApi(payload) {
@@ -561,21 +650,157 @@
       });
     }
 
+    function populateProdiSelects() {
+      const optionsHtml = PRODI_LIST.map(p => `<option value="${p}">${p}</option>`).join('');
+      document.getElementById('dptProdi').innerHTML = optionsHtml;
+      document.getElementById('candDapil').innerHTML = '<option value="SEMUA">SEMUA</option>' + optionsHtml;
+      document.getElementById('editDapil').innerHTML = '<option value="SEMUA">SEMUA</option>' + optionsHtml;
+      toggleCandDapil();
+    }
+
+    function toggleCandDapil() {
+      const cat = document.getElementById('candCat').value;
+      const dapilSel = document.getElementById('candDapil');
+      if (cat === 'BEM') {
+        dapilSel.value = 'SEMUA';
+        dapilSel.disabled = true;
+      } else {
+        dapilSel.disabled = false;
+        if (dapilSel.value === 'SEMUA') dapilSel.value = PRODI_LIST[0];
+      }
+    }
+
     function showVoterErr(msg) {
       const el = document.getElementById('voterErr');
       el.innerText = msg;
       el.style.display = 'block';
     }
 
+    async function handleVoterLogin() {
+      const nim = document.getElementById('loginNim').value.trim().toUpperCase();
+      const token = document.getElementById('loginToken').value.trim();
+      document.getElementById('voterErr').style.display = 'none';
+
+      if (!nim || !token) return showVoterErr('NIM dan Token wajib diisi.');
+
+      const btn = document.getElementById('btnLoginVoter');
+      btn.disabled = true;
+      btn.innerText = 'Memeriksa...';
+
+      try {
+        const res = await callApi({ action: 'loginVoter', nim, token });
+        if (!res.ok) return showVoterErr(res.message || 'Gagal masuk.');
+
+        state.activeVoter = res.voter;
+        state.activeToken = token;
+        state.voterBemList = res.bem || [];
+        state.voterDpmList = res.dpm || [];
+        state.pickedBem = null;
+        state.pickedDpm = null;
+
+        document.getElementById('voterInfoText').innerText =
+          `${res.voter.nama} (${res.voter.nim}) • Jurusan: ${res.voter.prodi}`;
+
+        renderBoothCandidates();
+        document.getElementById('voterLoginView').classList.add('hidden');
+        document.getElementById('boothView').classList.remove('hidden');
+      } catch (err) {
+        showVoterErr(err.message);
+      } finally {
+        btn.disabled = false;
+        btn.innerText = 'Masuk ke Bilik Suara';
+      }
+    }
+
+    function renderBoothCandidates() {
+      document.getElementById('bemList').innerHTML = state.voterBemList.length
+        ? state.voterBemList.map(c =>
+            `<div class="cand-card ${state.pickedBem === c.id ? 'selected' : ''}" onclick="selectCandidate('BEM', '${c.id}')">
+              <div class="badge-red">BEM • ${c.dapil}</div>
+              <div style="font-weight:700; font-size:15px; margin-top:8px;">${c.name}</div>
+            </div>`
+          ).join('')
+        : '<div style="color:var(--text-muted);">Belum ada kandidat BEM terdaftar.</div>';
+
+      document.getElementById('dpmList').innerHTML = state.voterDpmList.length
+        ? state.voterDpmList.map(c =>
+            `<div class="cand-card ${state.pickedDpm === c.id ? 'selected' : ''}" onclick="selectCandidate('DPM', '${c.id}')">
+              <div class="badge-red">DPM • ${c.dapil}</div>
+              <div style="font-weight:700; font-size:15px; margin-top:8px;">${c.name}</div>
+            </div>`
+          ).join('')
+        : '<div style="color:var(--text-muted);">Belum ada kandidat DPM untuk jurusan ini.</div>';
+    }
+
+    function selectCandidate(cat, id) {
+      if (cat === 'BEM') state.pickedBem = id;
+      if (cat === 'DPM') state.pickedDpm = id;
+      renderBoothCandidates();
+    }
+
+    function openVoteConfirm() {
+      if (!state.pickedBem) return alert('Silakan pilih Paslon BEM terlebih dahulu.');
+      if (!state.pickedDpm) return alert('Silakan pilih Calon DPM terlebih dahulu.');
+
+      const bemObj = state.voterBemList.find(c => c.id === state.pickedBem);
+      const dpmObj = state.voterDpmList.find(c => c.id === state.pickedDpm);
+
+      document.getElementById('confirmSummary').innerHTML =
+        `<strong>BEM:</strong> ${bemObj ? bemObj.name : state.pickedBem}<br>` +
+        `<strong>DPM:</strong> ${dpmObj ? dpmObj.name : state.pickedDpm}<br><br>` +
+        `Suara yang sudah dikirim tidak dapat diubah.`;
+      document.getElementById('confirmModal').style.display = 'flex';
+    }
+
+    function closeVoteConfirm() {
+      document.getElementById('confirmModal').style.display = 'none';
+    }
+
+    async function confirmVote() {
+      const btn = document.getElementById('btnConfirmVote');
+      btn.disabled = true;
+      btn.innerText = 'Mengirim...';
+
+      try {
+        const res = await callApi({
+          action: 'submitVote',
+          nim: state.activeVoter.nim,
+          token: state.activeToken,
+          bemId: state.pickedBem,
+          dpmId: state.pickedDpm
+        });
+        if (!res.ok) return alert(res.message || 'Gagal mengirim suara.');
+
+        closeVoteConfirm();
+        alert('Terima kasih! Suara Anda telah sah tercatat.');
+        exitBooth();
+        loadPublicLiveStats();
+      } catch (err) {
+        alert('Gagal mengirim suara: ' + err.message);
+      } finally {
+        btn.disabled = false;
+        btn.innerText = 'SAHKAN & KIRIM SUARA';
+      }
+    }
+
+    function exitBooth() {
+      state.activeVoter = null;
+      state.activeToken = '';
+      state.pickedBem = null;
+      state.pickedDpm = null;
+      document.getElementById('loginNim').value = '';
+      document.getElementById('loginToken').value = '';
+      document.getElementById('boothView').classList.add('hidden');
+      document.getElementById('voterLoginView').classList.remove('hidden');
+    }
+
     async function openSuperAdminPrompt() {
-      const code = prompt('Masukkan Kode Rahasia Super Admin:');
+      const code = prompt('Masukkan Kode Akses Super Admin:');
       if (code === null) return;
       if (code.trim() === state.adminCode) {
-        document.getElementById('voterLoginView').style.display = 'none';
-        document.getElementById('boothView').style.display = 'none';
-        const adm = document.getElementById('adminView');
-        adm.style.display = 'flex';
-        adm.classList.add('flex');
+        document.getElementById('voterLoginView').classList.add('hidden');
+        document.getElementById('boothView').classList.add('hidden');
+        document.getElementById('adminView').classList.remove('hidden');
         await syncAdminData();
       } else {
         alert('Kode Super Admin salah!');
@@ -596,115 +821,115 @@
     }
 
     function logoutAdmin() {
-      const adm = document.getElementById('adminView');
-      adm.style.display = 'none';
-      adm.classList.remove('flex');
-      document.getElementById('voterLoginView').style.display = 'flex';
+      document.getElementById('adminView').classList.add('hidden');
+      document.getElementById('voterLoginView').classList.remove('hidden');
+      loadPublicLiveStats();
     }
 
     function showAdminTab(tab, btn) {
-      ['dash', 'dpt', 'cand', 'security'].forEach(t => document.getElementById('atab-' + t).classList.add('hidden'));
+      ['dash', 'dpt', 'cand'].forEach(t => {
+        document.getElementById('atab-' + t).classList.add('hidden');
+      });
+      document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active'));
       document.getElementById('atab-' + tab).classList.remove('hidden');
-      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
       if (btn) btn.classList.add('active');
-      renderAdmin();
     }
 
-    function updateAdminCode() {
-      const val = document.getElementById('newAdminCode').value.trim();
-      if (!val) return alert('Kode tidak boleh kosong!');
-      state.adminCode = val;
-      document.getElementById('newAdminCode').value = '';
-      alert('Kode Super Admin berhasil diperbarui untuk sesi ini!');
+    function getCandidatePercentage(cand) {
+      if (cand.cat === 'BEM') {
+        const poolTotal = state.candidates
+          .filter(c => c.cat === 'BEM')
+          .reduce((acc, item) => acc + item.votes, 0);
+        return poolTotal > 0 ? ((cand.votes / poolTotal) * 100).toFixed(1) : '0.0';
+      } else {
+        const poolTotal = state.candidates
+          .filter(c => c.cat === 'DPM' && c.dapil === cand.dapil)
+          .reduce((acc, item) => acc + item.votes, 0);
+        return poolTotal > 0 ? ((cand.votes / poolTotal) * 100).toFixed(1) : '0.0';
+      }
     }
 
     function generateRandomToken() {
-      const used = new Set(state.dpt.map(v => v.token));
-      let token = '';
-      for (let i = 0; i < 50; i++) {
-        token = String(Math.floor(100000 + Math.random() * 900000));
-        if (!used.has(token)) break;
-      }
-      document.getElementById('inToken').value = token;
+      const code = String(Math.floor(100000 + Math.random() * 900000));
+      document.getElementById('dptToken').value = code;
     }
 
     async function addDpt() {
-      const nim = document.getElementById('inNim').value.trim().toUpperCase();
-      const nama = document.getElementById('inNama').value.trim();
-      const prodi = document.getElementById('inProdi').value;
-      let token = document.getElementById('inToken').value.trim();
-      if (!nim || !nama) return alert('Lengkapi NIM dan Nama terlebih dahulu!');
-      if (!token) {
-        generateRandomToken();
-        token = document.getElementById('inToken').value.trim();
+      const nim = document.getElementById('dptNim').value.trim().toUpperCase();
+      const nama = document.getElementById('dptNama').value.trim();
+      const prodi = document.getElementById('dptProdi').value;
+      const token = document.getElementById('dptToken').value.trim();
+
+      if (!nim || !nama || !prodi || !token) {
+        return alert('Lengkapi NIM, Nama, Jurusan, dan Token 6 digit.');
       }
 
-      const btn = document.getElementById('btnAddDpt');
-      btn.disabled = true;
-      btn.innerText = 'Menyimpan...';
       try {
         const res = await callApi({ action: 'addDpt', nim, nama, prodi, token });
-        if (!res.ok) return alert(res.message);
+        if (!res.ok) return alert(res.message || 'Gagal menambah DPT.');
         state.dpt = res.dpt;
         state.candidates = res.candidates;
         state.totalVotes = res.totalVotes;
-        document.getElementById('inNim').value = '';
-        document.getElementById('inNama').value = '';
-        document.getElementById('inToken').value = '';
+        document.getElementById('dptNim').value = '';
+        document.getElementById('dptNama').value = '';
+        document.getElementById('dptToken').value = '';
         renderAdmin();
+        loadPublicLiveStats();
       } catch (err) {
-        alert(err.message);
-      } finally {
-        btn.disabled = false;
-        btn.innerText = '+ Tambah Pemilih ke Sheets';
+        alert('Gagal menambah DPT: ' + err.message);
       }
     }
 
-    function exportDptToExcel() {
-      if (!state.dpt.length) return alert('Belum ada data DPT untuk diekspor.');
-      const headers = ['NIM', 'Nama', 'Jurusan', 'Token', 'Status', 'Waktu Memilih'];
-      const rows = state.dpt.map(v => [
-        `"${String(v.nim).replace(/"/g, '""')}"`,
-        `"${String(v.nama).replace(/"/g, '""')}"`,
-        `"${String(v.prodi).replace(/"/g, '""')}"`,
-        `"${String(v.token).replace(/"/g, '""')}"`,
-        `"${String(v.status).replace(/"/g, '""')}"`,
-        `"${String(v.waktu || '-').replace(/"/g, '""')}"`
-      ].join(';'));
-      const csvContent = '\uFEFF' + [headers.join(';'), ...rows].join('\r\n');
+    async function deleteDpt(nim) {
+      const voter = state.dpt.find(v => v.nim === nim);
+      const label = voter ? `${voter.nama} (${voter.nim})` : nim;
+      if (!confirm(`Yakin ingin menghapus pemilih ${label} dari DPT?`)) return;
+
+      try {
+        const res = await callApi({ action: 'deleteDpt', nim });
+        if (!res.ok) return alert(res.message || 'Gagal menghapus data DPT.');
+        state.dpt = res.dpt;
+        state.candidates = res.candidates;
+        state.totalVotes = res.totalVotes;
+        renderAdmin();
+        loadPublicLiveStats();
+      } catch (err) {
+        alert('Gagal menghapus data DPT: ' + err.message);
+      }
+    }
+
+    function exportDptCsv() {
+      const header = ['NIM', 'Nama', 'Jurusan', 'Token', 'Status', 'Waktu'];
+      const rows = state.dpt.map(v => [v.nim, v.nama, v.prodi, v.token, v.status, v.waktu]);
+      const csvContent = [header, ...rows]
+        .map(r => r.map(cell => `"${String(cell || '').replace(/"/g, '""')}"`).join(','))
+        .join('\n');
       const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
       const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = 'DPT_PEMIRA_FEB_UNTAD_2026.csv';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'DPT_PEMIRA_FEB_UNTAD_2026.csv';
+      a.click();
       URL.revokeObjectURL(url);
     }
 
     async function addCandidate() {
-      const cat = document.getElementById('addCandCat').value;
-      const dapil = document.getElementById('addCandDapil').value;
-      const name = document.getElementById('addCandName').value.trim();
-      if (!name) return alert('Isi nama paslon atau kandidat terlebih dahulu!');
+      const cat = document.getElementById('candCat').value;
+      const dapil = cat === 'BEM' ? 'SEMUA' : document.getElementById('candDapil').value;
+      const name = document.getElementById('candName').value.trim();
+      if (!name) return alert('Nama kandidat tidak boleh kosong!');
 
-      const btn = document.getElementById('btnAddCand');
-      btn.disabled = true;
-      btn.innerText = 'Menyimpan...';
       try {
         const res = await callApi({ action: 'addCandidate', cat, dapil, name });
-        if (!res.ok) return alert(res.message);
+        if (!res.ok) return alert(res.message || 'Gagal menambah kandidat.');
         state.dpt = res.dpt;
         state.candidates = res.candidates;
         state.totalVotes = res.totalVotes;
-        document.getElementById('addCandName').value = '';
+        document.getElementById('candName').value = '';
         renderAdmin();
+        loadPublicLiveStats();
       } catch (err) {
-        alert(err.message);
-      } finally {
-        btn.disabled = false;
-        btn.innerText = '+ Tambah Kandidat';
+        alert('Gagal menambah kandidat: ' + err.message);
       }
     }
 
@@ -726,7 +951,7 @@
     async function saveEditedCandidate() {
       if (!state.editingCandId) return;
       const cat = document.getElementById('editCat').value;
-      const dapil = document.getElementById('editDapil').value;
+      const dapil = cat === 'BEM' ? 'SEMUA' : document.getElementById('editDapil').value;
       const name = document.getElementById('editName').value.trim();
       if (!name) return alert('Nama kandidat tidak boleh kosong!');
 
@@ -741,6 +966,7 @@
         state.totalVotes = res.totalVotes;
         cancelEditCandidate();
         renderAdmin();
+        loadPublicLiveStats();
       } catch (err) {
         alert(err.message);
       } finally {
@@ -748,7 +974,8 @@
         btn.innerText = 'Simpan Perubahan';
       }
     }
-async function deleteCandidate(id) {
+
+    async function deleteCandidate(id) {
       const cand = state.candidates.find(c => c.id === id);
       const label = cand ? `${cand.name} (${cand.cat})` : 'kandidat ini';
       if (!confirm(`Yakin ingin menghapus ${label} dari daftar kandidat?`)) return;
@@ -761,130 +988,10 @@ async function deleteCandidate(id) {
         state.totalVotes = res.totalVotes;
         if (state.editingCandId === id) cancelEditCandidate();
         renderAdmin();
+        loadPublicLiveStats();
       } catch (err) {
         alert('Gagal menghapus kandidat: ' + err.message);
       }
-    }
-    function getCandidatePercentage(cand) {
-      if (cand.cat === 'BEM') {
-        const poolTotal = state.candidates
-          .filter(c => c.cat === 'BEM')
-          .reduce((acc, item) => acc + item.votes, 0);
-        return poolTotal > 0 ? ((cand.votes / poolTotal) * 100).toFixed(1) : '0.0';
-      } else {
-        const poolTotal = state.candidates
-          .filter(c => c.cat === 'DPM' && c.dapil === cand.dapil)
-          .reduce((acc, item) => acc + item.votes, 0);
-        return poolTotal > 0 ? ((cand.votes / poolTotal) * 100).toFixed(1) : '0.0';
-      }
-    }
-
-    async function voterLogin() {
-      document.getElementById('voterErr').style.display = 'none';
-      const nim = document.getElementById('loginNim').value.trim().toUpperCase();
-      const token = document.getElementById('loginToken').value.trim();
-
-      if (!nim || !token) {
-        return showVoterErr('Silakan isi NIM dan Kode Token terlebih dahulu.');
-      }
-
-      const btn = document.getElementById('btnVoterLogin');
-      btn.disabled = true;
-      btn.innerText = 'MEMERIKSA DPT...';
-
-      try {
-        const res = await callApi({ action: 'loginVoter', nim, token });
-        if (!res.ok) {
-          return showVoterErr(res.message || 'Gagal memverifikasi data pemilih.');
-        }
-
-        state.activeVoter = res.voter;
-        state.activeToken = token;
-        state.pickedBem = null;
-        state.pickedDpm = null;
-
-        document.getElementById('bNama').innerText = res.voter.nama;
-        document.getElementById('bNim').innerText = res.voter.nim;
-        document.getElementById('bProdi').innerText = res.voter.prodi;
-        document.getElementById('bDapilLabel').innerText = res.voter.prodi;
-
-        document.getElementById('bemCards').innerHTML = (res.bem || []).map(c =>
-          `<div class="cand-card" id="bem-${c.id}" onclick="selectCand('BEM', '${c.id}')">
-            <div style="font-weight:700;font-size:15px;">${c.name}</div>
-            <div style="font-size:12px;color:#64748b;margin-top:4px;">Pemilihan BEM FEB-UNTAD</div>
-          </div>`
-        ).join('');
-
-        const dpmList = res.dpm || [];
-        if (dpmList.length === 0) {
-          state.pickedDpm = 'KOTAK_KOSONG';
-          document.getElementById('dpmCards').innerHTML = `<div class="cand-card selected"><strong>Kotak Kosong</strong><div style="font-size:12px;color:#64748b;">Belum ada calon DPM terdaftar di jurusan ${res.voter.prodi}</div></div>`;
-        } else {
-          document.getElementById('dpmCards').innerHTML = dpmList.map(c =>
-            `<div class="cand-card" id="dpm-${c.id}" onclick="selectCand('DPM', '${c.id}')">
-              <div style="font-weight:700;font-size:15px;">${c.name}</div>
-              <div style="font-size:12px;color:#64748b;margin-top:4px;">Jurusan ${c.dapil}</div>
-            </div>`
-          ).join('');
-        }
-
-        document.getElementById('voterLoginView').style.display = 'none';
-        document.getElementById('boothView').style.display = 'block';
-      } catch (err) {
-        showVoterErr('Koneksi gagal: ' + err.message);
-      } finally {
-        btn.disabled = false;
-        btn.innerText = 'BUKA SURAT SUARA SAYA →';
-      }
-    }
-
-    function selectCand(cat, id) {
-      if (cat === 'BEM') {
-        document.querySelectorAll('#bemCards .cand-card').forEach(el => el.classList.remove('selected'));
-        document.getElementById('bem-' + id).classList.add('selected');
-        state.pickedBem = id;
-      } else {
-        document.querySelectorAll('#dpmCards .cand-card').forEach(el => el.classList.remove('selected'));
-        document.getElementById('dpm-' + id).classList.add('selected');
-        state.pickedDpm = id;
-      }
-    }
-
-    async function confirmVote() {
-      if (!state.pickedBem || !state.pickedDpm) {
-        return alert('Silakan pilih calon BEM dan calon DPM terlebih dahulu!');
-      }
-      if (!confirm('Kirim dan sahkan pilihan Anda sekarang? Pilihan tidak dapat diubah.')) return;
-
-      const btn = document.getElementById('btnConfirmVote');
-      btn.disabled = true;
-      btn.innerText = 'MENGIRIM SUARA...';
-
-      try {
-        const res = await callApi({
-          action: 'submitVote',
-          nim: state.activeVoter.nim,
-          token: state.activeToken,
-          bemId: state.pickedBem,
-          dpmId: state.pickedDpm
-        });
-        if (!res.ok) return alert(res.message);
-
-        alert('Terima kasih! Suara Anda berhasil dicatat ke database dan token otomatis terkunci.');
-        exitBooth();
-      } catch (err) {
-        alert('Gagal mengirim suara: ' + err.message);
-      } finally {
-        btn.disabled = false;
-        btn.innerText = 'SAHKAN & KIRIM SUARA';
-      }
-    }
-
-    function exitBooth() {
-      document.getElementById('loginNim').value = '';
-      document.getElementById('loginToken').value = '';
-      document.getElementById('boothView').style.display = 'none';
-      document.getElementById('voterLoginView').style.display = 'flex';
     }
 
     function renderAdmin() {
@@ -899,31 +1006,34 @@ async function deleteCandidate(id) {
           <td>${c.dapil}</td>
           <td>${c.name}</td>
           <td><strong>${c.votes}</strong></td>
-          <td>
-            <div class="pct-bar-wrap"><div class="pct-bar" style="width:${pct}%;"></div></div>
-            <strong>${pct}%</strong>
-          </td>
+          <td><strong>${pct}%</strong></td>
         </tr>`;
       }).join('');
 
       document.getElementById('dashProdiPctBody').innerHTML = PRODI_LIST.map(prodi => {
-        const votersInProdi = state.dpt.filter(v => v.prodi === prodi);
-        const totalInProdi = votersInProdi.length;
-        const votedInProdi = votersInProdi.filter(v => v.status === 'Sudah Memilih').length;
-        const pctProdi = totalInProdi > 0 ? ((votedInProdi / totalInProdi) * 100).toFixed(1) : '0.0';
+        const totalProdi = state.dpt.filter(v => v.prodi === prodi).length;
+        const votedProdi = state.dpt.filter(v => v.prodi === prodi && v.status === 'Sudah Memilih').length;
+        const pctProdi = totalProdi > 0 ? ((votedProdi / totalProdi) * 100).toFixed(1) : '0.0';
         return `<tr>
-          <td><strong>${prodi}</strong></td>
-          <td>${votedInProdi}</td>
-          <td>${totalInProdi}</td>
-          <td>
-            <div class="pct-bar-wrap"><div class="pct-bar" style="width:${pctProdi}%;"></div></div>
-            <strong>${pctProdi}%</strong>
-          </td>
+          <td>${prodi}</td>
+          <td>${votedProdi}</td>
+          <td>${totalProdi}</td>
+          <td><strong>${pctProdi}%</strong></td>
         </tr>`;
       }).join('');
 
       document.getElementById('aDptBody').innerHTML = state.dpt.map(v =>
-        `<tr><td>${v.nim}</td><td>${v.nama}</td><td>${v.prodi}</td><td>${v.token}</td><td>${v.status}</td><td>${v.waktu || '-'}</td></tr>`
+        `<tr>
+          <td>${v.nim}</td>
+          <td>${v.nama}</td>
+          <td>${v.prodi}</td>
+          <td>${v.token}</td>
+          <td>${v.status}</td>
+          <td>${v.waktu}</td>
+          <td style="white-space:nowrap;">
+            <button type="button" class="btn btn-secondary btn-sm" onclick="deleteDpt('${v.nim}')">Hapus</button>
+          </td>
+        </tr>`
       ).join('');
 
       document.getElementById('aCandBody').innerHTML = state.candidates.map(c =>
@@ -938,6 +1048,63 @@ async function deleteCandidate(id) {
         </tr>`
       ).join('');
     }
+
+    async function loadPublicLiveStats() {
+      try {
+        const data = await callApi({ action: 'getAdminData' });
+        if (!data || !data.ok) return;
+
+        state.dpt = data.dpt || [];
+        state.candidates = data.candidates || [];
+        state.totalVotes = data.totalVotes || 0;
+
+        const totalDpt = state.dpt.length;
+        const totalVote = state.totalVotes;
+        const pctPartisipasi = totalDpt > 0 ? ((totalVote / totalDpt) * 100).toFixed(1) : '0.0';
+
+        document.getElementById('pubStatDpt').innerText = totalDpt;
+        document.getElementById('pubStatVote').innerText = totalVote;
+        document.getElementById('pubStatPct').innerText = pctPartisipasi + '%';
+
+        const listEl = document.getElementById('pubLiveCandList');
+        if (!state.candidates.length) {
+          listEl.innerHTML = '<div style="color:var(--text-muted); font-size:14px;">Belum ada data kandidat.</div>';
+          return;
+        }
+
+        listEl.innerHTML = state.candidates.map(c => {
+          const pct = getCandidatePercentage(c);
+          const dapilLabel = c.cat === 'BEM' ? 'Semua Jurusan' : c.dapil;
+          return `
+            <div class="live-item">
+              <div class="live-item-top">
+                <div>
+                  <span class="badge-red">${c.cat} • ${dapilLabel}</span>
+                  <strong>${c.name}</strong>
+                </div>
+                <div style="font-weight:700; color:var(--red-maroon); white-space:nowrap;">
+                  ${pct}% <span style="font-weight:400; color:var(--text-muted); font-size:12px;">(${c.votes} suara)</span>
+                </div>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill" style="width:${pct}%;"></div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      } catch (err) {
+        const listEl = document.getElementById('pubLiveCandList');
+        if (listEl) {
+          listEl.innerHTML = '<div style="color:#991B1B; font-size:13px;">Menunggu koneksi server Google Apps Script...</div>';
+        }
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      populateProdiSelects();
+      loadPublicLiveStats();
+      setInterval(loadPublicLiveStats, 30000);
+    });
   </script>
 </body>
 </html>
