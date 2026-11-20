@@ -515,16 +515,50 @@
       editingCandId: null
     };
 
-    async function callApi(payload) {
-      if (!GAS_WEBAPP_URL || GAS_WEBAPP_URL.includes('PASTE_URL')) {
-        throw new Error('URL Google Apps Script belum dipasang di index.html.');
-      }
-      const res = await fetch(GAS_WEBAPP_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify(payload)
+    function callApi(payload) {
+      return new Promise((resolve, reject) => {
+        if (!GAS_WEBAPP_URL || GAS_WEBAPP_URL.includes('PASTE_URL')) {
+          return reject(new Error('URL Google Apps Script belum dipasang di index.html.'));
+        }
+
+        const cbName = 'gasCb_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
+        const scriptEl = document.createElement('script');
+        let finished = false;
+
+        const cleanup = () => {
+          if (scriptEl.parentNode) scriptEl.parentNode.removeChild(scriptEl);
+          try { delete window[cbName]; } catch (e) { window[cbName] = undefined; }
+        };
+
+        const timer = setTimeout(() => {
+          if (finished) return;
+          finished = true;
+          cleanup();
+          reject(new Error('Waktu habis saat menghubungi server Google Apps Script.'));
+        }, 20000);
+
+        window[cbName] = (data) => {
+          if (finished) return;
+          finished = true;
+          clearTimeout(timer);
+          cleanup();
+          resolve(data);
+        };
+
+        scriptEl.onerror = () => {
+          if (finished) return;
+          finished = true;
+          clearTimeout(timer);
+          cleanup();
+          reject(new Error('Gagal memuat skrip dari Google Apps Script. Periksa akses deployment (Anyone).'));
+        };
+
+        const sep = GAS_WEBAPP_URL.includes('?') ? '&' : '?';
+        const action = encodeURIComponent(payload.action || '');
+        const encodedPayload = encodeURIComponent(JSON.stringify(payload));
+        scriptEl.src = `${GAS_WEBAPP_URL}${sep}action=${action}&payload=${encodedPayload}&callback=${cbName}`;
+        document.body.appendChild(scriptEl);
       });
-      return await res.json();
     }
 
     function showVoterErr(msg) {
