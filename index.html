@@ -110,12 +110,17 @@
       transition: all 0.15s ease;
     }
 
+    .btn:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+
     .btn-red {
       background: var(--red-main);
       color: #FFFFFF;
     }
 
-    .btn-red:hover { background: var(--red-hover); }
+    .btn-red:hover:not(:disabled) { background: var(--red-hover); }
 
     .btn-outline-red {
       background: #FFFFFF;
@@ -123,7 +128,7 @@
       border: 1px solid var(--red-maroon);
     }
 
-    .btn-outline-red:hover { background: var(--red-soft); }
+    .btn-outline-red:hover:not(:disabled) { background: var(--red-soft); }
 
     .btn-secondary {
       background: #F3F4F6;
@@ -131,7 +136,7 @@
       border: 1px solid #D1D5DB;
     }
 
-    .btn-secondary:hover { background: #E5E7EB; }
+    .btn-secondary:hover:not(:disabled) { background: #E5E7EB; }
 
     .btn-sm { padding: 6px 11px; font-size: 12px; }
 
@@ -360,7 +365,7 @@
       </div>
     </div>
     <div style="display:flex; gap:8px; align-items:center;">
-      <button type="button" class="btn btn-outline-red btn-sm" onclick="openSuperAdminPrompt()">Akses Super Admin</button>
+      <button id="btnSuperAdminTop" type="button" class="btn btn-outline-red btn-sm" onclick="openSuperAdminPrompt()">Akses Super Admin</button>
     </div>
   </header>
 
@@ -375,11 +380,11 @@
 
         <div class="field">
           <label for="loginNim">NIM</label>
-          <input id="loginNim" type="text" placeholder="Contoh: C20124002" />
+          <input id="loginNim" type="text" autocomplete="off" placeholder="Contoh: C20124002" />
         </div>
         <div class="field">
           <label for="loginToken">Token 6 Digit</label>
-          <input id="loginToken" type="text" maxlength="6" placeholder="Contoh: 123456" />
+          <input id="loginToken" type="text" maxlength="6" autocomplete="off" placeholder="Contoh: 123456" />
         </div>
         <button id="btnLoginVoter" type="button" class="btn btn-red" style="width:100%;" onclick="handleVoterLogin()">Masuk ke Bilik Suara</button>
       </div>
@@ -563,7 +568,7 @@
               <button type="button" class="btn btn-secondary btn-sm" onclick="generateRandomToken()">Acak</button>
             </div>
           </div>
-          <button type="button" class="btn btn-red" onclick="addDpt()">+ Tambah Pemilih</button>
+          <button id="btnAddDpt" type="button" class="btn btn-red" onclick="addDpt()">+ Tambah Pemilih</button>
         </div>
 
         <table>
@@ -602,7 +607,7 @@
             <label for="candName">Nama Paslon / Kandidat</label>
             <input id="candName" type="text" placeholder="Nama Paslon / Kandidat baru" />
           </div>
-          <button type="button" class="btn btn-red" onclick="addCandidate()">+ Tambah Kandidat</button>
+          <button id="btnAddCand" type="button" class="btn btn-red" onclick="addCandidate()">+ Tambah Kandidat</button>
         </div>
 
         <div id="editCandBox" class="card hidden" style="background:var(--red-soft); margin-top:14px;">
@@ -610,7 +615,7 @@
           <div class="row-form">
             <div class="field" style="margin:0;">
               <label for="editCat">Kategori</label>
-              <select id="editCat">
+              <select id="editCat" onchange="toggleEditDapil()">
                 <option value="BEM">BEM</option>
                 <option value="DPM">DPM</option>
               </select>
@@ -658,7 +663,7 @@
   </div>
 
   <script>
-    const GAS_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycby-1xkFaEx8JkVWAE7Md9P10pasRj5mquesmOPHAUO6Cgv_I5O_gJPGoKzmRgX7WQeh/exec';
+    const GAS_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbzFtSBt864mlTW-KdwMfYAoS1JUg3B30Qx8yAxrXGU6ah3DCQLtrqLdS1ZNz6m93cGa/exec';
     const PRODI_LIST = [
       'S1 Manajemen',
       'S1 Akuntansi',
@@ -675,7 +680,6 @@
     let pendingLogoData = '';
 
     const state = {
-      adminCode: 'ADMINFEB2026',
       dpt: [],
       candidates: [],
       totalVotes: 0,
@@ -687,6 +691,25 @@
       voterBemList: [],
       voterDpmList: []
     };
+
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('keydown', e => {
+      if (
+        e.key === 'F12' ||
+        (e.ctrlKey && e.shiftKey && ['I', 'J', 'C'].includes(e.key.toUpperCase())) ||
+        (e.ctrlKey && e.key.toUpperCase() === 'U')
+      ) {
+        e.preventDefault();
+      }
+    });
+
+    function applyBoothUrlMode() {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('mode') === 'bilik') {
+        const adminBtn = document.getElementById('btnSuperAdminTop');
+        if (adminBtn) adminBtn.classList.add('hidden');
+      }
+    }
 
     function renderLogoTargets(logoSrc) {
       const targets = [
@@ -877,6 +900,18 @@
       }
     }
 
+    function toggleEditDapil() {
+      const cat = document.getElementById('editCat').value;
+      const dapilSel = document.getElementById('editDapil');
+      if (cat === 'BEM') {
+        dapilSel.value = 'SEMUA';
+        dapilSel.disabled = true;
+      } else {
+        dapilSel.disabled = false;
+        if (dapilSel.value === 'SEMUA') dapilSel.value = PRODI_LIST[0];
+      }
+    }
+
     function showVoterErr(msg) {
       const el = document.getElementById('voterErr');
       el.innerText = msg;
@@ -1004,13 +1039,19 @@
     async function openSuperAdminPrompt() {
       const code = prompt('Masukkan Kode Akses Super Admin:');
       if (code === null) return;
-      if (code.trim() === state.adminCode) {
+      if (!code.trim()) return alert('Kode Super Admin wajib diisi.');
+
+      try {
+        const res = await callApi({ action: 'verifyAdmin', code: code.trim() });
+        if (!res || !res.ok) {
+          return alert((res && res.message) || 'Kode Super Admin salah!');
+        }
         document.getElementById('voterLoginView').classList.add('hidden');
         document.getElementById('boothView').classList.add('hidden');
         document.getElementById('adminView').classList.remove('hidden');
         await syncAdminData();
-      } else {
-        alert('Kode Super Admin salah!');
+      } catch (err) {
+        alert('Gagal memverifikasi kode admin: ' + err.message);
       }
     }
 
@@ -1071,6 +1112,9 @@
         return alert('Lengkapi NIM, Nama, Jurusan, dan Token 6 digit.');
       }
 
+      const btn = document.getElementById('btnAddDpt');
+      btn.disabled = true;
+      btn.innerText = 'Menyimpan...';
       try {
         const res = await callApi({ action: 'addDpt', nim, nama, prodi, token });
         if (!res.ok) return alert(res.message || 'Gagal menambah DPT.');
@@ -1084,6 +1128,9 @@
         loadPublicLiveStats();
       } catch (err) {
         alert('Gagal menambah DPT: ' + err.message);
+      } finally {
+        btn.disabled = false;
+        btn.innerText = '+ Tambah Pemilih';
       }
     }
 
@@ -1126,6 +1173,9 @@
       const name = document.getElementById('candName').value.trim();
       if (!name) return alert('Nama kandidat tidak boleh kosong!');
 
+      const btn = document.getElementById('btnAddCand');
+      btn.disabled = true;
+      btn.innerText = 'Menyimpan...';
       try {
         const res = await callApi({ action: 'addCandidate', cat, dapil, name });
         if (!res.ok) return alert(res.message || 'Gagal menambah kandidat.');
@@ -1137,6 +1187,9 @@
         loadPublicLiveStats();
       } catch (err) {
         alert('Gagal menambah kandidat: ' + err.message);
+      } finally {
+        btn.disabled = false;
+        btn.innerText = '+ Tambah Kandidat';
       }
     }
 
@@ -1147,6 +1200,7 @@
       document.getElementById('editCat').value = cand.cat;
       document.getElementById('editDapil').value = cand.dapil;
       document.getElementById('editName').value = cand.name;
+      toggleEditDapil();
       document.getElementById('editCandBox').classList.remove('hidden');
     }
 
@@ -1308,6 +1362,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
+      applyBoothUrlMode();
       loadHeaderBranding();
       populateProdiSelects();
       loadPublicLiveStats();
