@@ -14,7 +14,6 @@
     * { box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
     body { margin: 0; background: #f8fafc; color: #0f172a; }
 
-    /* Halaman Utama Langsung ke Pemilih */
     .login-wrap {
       min-height: 100vh;
       display: flex;
@@ -46,7 +45,6 @@
       align-items: center;
       gap: 12px;
       margin-bottom: 18px;
-      flex-wrap: wrap;
     }
     .logo-img {
       width: 58px;
@@ -93,6 +91,7 @@
       cursor: pointer;
     }
     .btn:hover { background: var(--dpm-red-dark); }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; }
     .btn-block { width: 100%; padding: 13px 16px; font-size: 15px; }
     .btn-secondary { background: #334155; color: #fff; }
     .btn-secondary:hover { background: #1e293b; }
@@ -115,10 +114,7 @@
       display: none;
     }
 
-    .secret-admin-trigger {
-      margin-top: 16px;
-      text-align: center;
-    }
+    .secret-admin-trigger { margin-top: 16px; text-align: center; }
     .secret-btn {
       background: none;
       border: none;
@@ -129,12 +125,7 @@
     }
     .secret-btn:hover { color: var(--dpm-red); }
 
-    /* Bilik Suara Pemilih */
-    .booth-wrap {
-      display: none;
-      min-height: 100vh;
-      padding: 24px 16px;
-    }
+    .booth-wrap { display: none; min-height: 100vh; padding: 24px 16px; }
     .booth-box {
       max-width: 780px;
       margin: 0 auto;
@@ -186,12 +177,8 @@
       transition: 0.15s;
     }
     .cand-card:hover { border-color: #fca5a5; }
-    .cand-card.selected {
-      border-color: var(--dpm-red);
-      background: var(--dpm-red-soft);
-    }
+    .cand-card.selected { border-color: var(--dpm-red); background: var(--dpm-red-soft); }
 
-    /* Dashboard Super Admin */
     .admin-wrap { display: none; min-height: 100vh; }
     .sidebar {
       width: 245px;
@@ -224,10 +211,7 @@
       cursor: pointer;
       margin-bottom: 4px;
     }
-    .nav-btn.active, .nav-btn:hover {
-      background: var(--dpm-red-soft);
-      color: var(--dpm-red);
-    }
+    .nav-btn.active, .nav-btn:hover { background: var(--dpm-red-soft); color: var(--dpm-red); }
     .main { flex: 1; padding: 24px; }
     .stats {
       display: grid;
@@ -249,6 +233,7 @@
       border-radius: 12px;
       border: 1px solid #e2e8f0;
       margin-bottom: 16px;
+      overflow-x: auto;
     }
     .panel-head {
       display: flex;
@@ -258,11 +243,7 @@
       flex-wrap: wrap;
       margin-bottom: 14px;
     }
-    .token-group {
-      display: flex;
-      gap: 6px;
-      align-items: center;
-    }
+    .token-group { display: flex; gap: 6px; align-items: center; }
     .token-group input { margin-bottom: 0; }
     table { width: 100%; border-collapse: collapse; font-size: 14px; }
     th, td { text-align: left; padding: 10px; border-bottom: 1px solid #e2e8f0; }
@@ -277,10 +258,7 @@
       vertical-align: middle;
       margin-right: 8px;
     }
-    .pct-bar {
-      height: 100%;
-      background: var(--dpm-red);
-    }
+    .pct-bar { height: 100%; background: var(--dpm-red); }
     .hidden { display: none; }
 
     @media (max-width: 768px) {
@@ -293,7 +271,7 @@
 </head>
 <body>
 
-  <!-- 1. HALAMAN UTAMA: LANGSUNG BILIK SUARA PEMILIH -->
+  <!-- 1. HALAMAN UTAMA: BILIK SUARA PEMILIH -->
   <div id="voterLoginView" class="login-wrap">
     <div class="login-card">
       <div class="login-left">
@@ -308,7 +286,7 @@
 
       <div class="login-right">
         <h2 style="margin:0 0 6px;">Masuk Bilik Suara</h2>
-        <p style="margin:0 0 16px;color:#64748b;font-size:13px;">1 Mahasiswa = 1 Hak Suara (Rahasia &amp; Terkunci Otomatis)</p>
+        <p style="margin:0 0 16px;color:#64748b;font-size:13px;">1 Mahasiswa = 1 Hak Suara (Tersinkronisasi Google Sheets)</p>
 
         <div id="voterErr" class="err-box"></div>
 
@@ -318,7 +296,7 @@
         <label>Kode Token (6 Digit)</label>
         <input type="password" id="loginToken" placeholder="Masukkan token dari panitia" autocomplete="off" />
 
-        <button class="btn btn-block" onclick="voterLogin()">BUKA SURAT SUARA SAYA →</button>
+        <button id="btnVoterLogin" class="btn btn-block" onclick="voterLogin()">BUKA SURAT SUARA SAYA →</button>
 
         <div class="secret-admin-trigger">
           <button type="button" class="secret-btn" onclick="openSuperAdminPrompt()">Akses Super Admin</button>
@@ -351,7 +329,7 @@
       <div class="section-title">2. Calon Anggota DPM — Jurusan <span id="bDapilLabel"></span></div>
       <div id="dpmCards" class="cand-grid"></div>
 
-      <button class="btn btn-block" style="margin-top:22px;padding:14px;" onclick="confirmVote()">SAHKAN &amp; KIRIM SUARA</button>
+      <button id="btnConfirmVote" class="btn btn-block" style="margin-top:22px;padding:14px;" onclick="confirmVote()">SAHKAN &amp; KIRIM SUARA</button>
     </div>
   </div>
 
@@ -370,9 +348,11 @@
     </aside>
 
     <main class="main">
-      <!-- TAB DASHBOARD REKAPITULASI -->
       <div id="atab-dash">
-        <h2 style="margin-top:0;">Dashboard Rekapitulasi</h2>
+        <div class="panel-head">
+          <h2 style="margin:0;">Dashboard Rekapitulasi (Live Google Sheets)</h2>
+          <button class="btn btn-outline-red btn-sm" onclick="syncAdminData()">↻ Segarkan Data</button>
+        </div>
         <div class="stats">
           <div class="stat-box"><div style="color:#64748b;font-size:13px;">Total DPT Terdaftar</div><div id="aStatDpt" class="stat-num">0</div></div>
           <div class="stat-box"><div style="color:#64748b;font-size:13px;">Total Kandidat</div><div id="aStatCand" class="stat-num">0</div></div>
@@ -411,7 +391,6 @@
         </div>
       </div>
 
-      <!-- TAB DATA PEMILIH (DPT) -->
       <div id="atab-dpt" class="panel hidden">
         <div class="panel-head">
           <h3 style="margin:0;">Input &amp; Ekspor Data Pemilih (DPT)</h3>
@@ -430,24 +409,22 @@
           </select>
           <div class="token-group">
             <input type="text" id="inToken" placeholder="Token 6 digit" maxlength="6" />
-            <button type="button" class="btn btn-secondary btn-sm" onclick="generateRandomToken()" title="Acak Token Otomatis">Acak</button>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="generateRandomToken()">Acak</button>
           </div>
         </div>
-        <button class="btn" style="padding:10px 18px;" onclick="addDpt()">+ Tambah Pemilih</button>
+        <button id="btnAddDpt" class="btn" style="padding:10px 18px;" onclick="addDpt()">+ Tambah Pemilih ke Sheets</button>
 
         <table style="margin-top:16px;">
-          <thead><tr><th>NIM</th><th>Nama</th><th>Jurusan</th><th>Token</th><th>Status</th></tr></thead>
+          <thead><tr><th>NIM</th><th>Nama</th><th>Jurusan</th><th>Token</th><th>Status</th><th>Waktu</th></tr></thead>
           <tbody id="aDptBody"></tbody>
         </table>
       </div>
 
-      <!-- TAB DATA KANDIDAT (TAMBAH & UBAH DATA KANDIDAT) -->
       <div id="atab-cand" class="panel hidden">
         <div class="panel-head">
           <h3 style="margin:0;">Tambah &amp; Ubah Data Kandidat</h3>
         </div>
 
-        <!-- Form Tambah Kandidat Baru -->
         <div style="background:#f8fafc;border:1px solid #e2e8f0;padding:14px;border-radius:10px;margin-bottom:16px;">
           <div style="font-weight:700;color:#0f172a;margin-bottom:10px;">Tambah Kandidat Baru</div>
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-bottom:10px;">
@@ -465,10 +442,9 @@
             </select>
             <input type="text" id="addCandName" placeholder="Nama Paslon / Kandidat baru" style="margin:0;" />
           </div>
-          <button type="button" class="btn btn-sm" onclick="addCandidate()">+ Tambah Kandidat</button>
+          <button id="btnAddCand" type="button" class="btn btn-sm" onclick="addCandidate()">+ Tambah Kandidat</button>
         </div>
 
-        <!-- Form Edit Kandidat -->
         <div id="editCandBox" class="hidden" style="background:#fff5f5;border:1px solid #fecaca;padding:14px;border-radius:10px;margin-bottom:16px;">
           <div style="font-weight:700;color:var(--dpm-red-dark);margin-bottom:10px;">Edit Kandidat</div>
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;">
@@ -487,7 +463,7 @@
             <input type="text" id="editName" placeholder="Nama Paslon / Kandidat" style="margin:0;" />
           </div>
           <div style="margin-top:10px;display:flex;gap:8px;">
-            <button type="button" class="btn btn-sm" onclick="saveEditedCandidate()">Simpan Perubahan</button>
+            <button id="btnSaveCand" type="button" class="btn btn-sm" onclick="saveEditedCandidate()">Simpan Perubahan</button>
             <button type="button" class="btn btn-secondary btn-sm" onclick="cancelEditCandidate()">Batal</button>
           </div>
         </div>
@@ -505,10 +481,9 @@
         </table>
       </div>
 
-      <!-- TAB KODE SUPER ADMIN -->
       <div id="atab-security" class="panel hidden">
         <h3 style="margin-top:0;">Pengaturan Kode Rahasia Super Admin</h3>
-        <p style="color:#64748b;font-size:13px;">Kode bawaan saat ini: <strong>ADMINFEB2026</strong>. Anda bisa menggantinya di bawah ini untuk sesi pengujian.</p>
+        <p style="color:#64748b;font-size:13px;">Kode bawaan saat ini: <strong>ADMINFEB2026</strong>.</p>
         <label>Kode Super Admin Baru</label>
         <input type="text" id="newAdminCode" placeholder="Masukkan kode rahasia baru" style="max-width:320px;" />
         <button class="btn" style="padding:10px 18px;" onclick="updateAdminCode()">Simpan Kode Baru</button>
@@ -517,6 +492,9 @@
   </div>
 
   <script>
+    // TEMPEL URL WEB APP APPS SCRIPT ANDA DI BAWAH INI:
+    const GAS_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbxTQ9JRU2Av8zfo6Zqbux-BaxJ8Xk0h5kq6xpEy7wP-iv8OmlQVRjMdld98oKmcWtI5/exec';
+
     const PRODI_LIST = [
       'S1 Manajemen',
       'S1 Akuntansi',
@@ -527,25 +505,27 @@
 
     const state = {
       adminCode: 'ADMINFEB2026',
-      dpt: [
-        { nim: 'C20124002', nama: 'Adrian Nathan Saki', prodi: 'S1 Manajemen', token: '123456', status: 'Belum Memilih' },
-        { nim: 'C10124002', nama: 'Pemilih Uji Coba', prodi: 'S1 Manajemen', token: '949232', status: 'Belum Memilih' }
-      ],
-      candidates: [
-        { id: 'BEM-1', cat: 'BEM', dapil: 'SEMUA', name: 'Paslon 01 - BEM FEB', votes: 0 },
-        { id: 'BEM-2', cat: 'BEM', dapil: 'SEMUA', name: 'Paslon 02 - BEM FEB', votes: 0 },
-        { id: 'DPM-MNJ-1', cat: 'DPM', dapil: 'S1 Manajemen', name: 'Calon 01 DPM - S1 Manajemen', votes: 0 },
-        { id: 'DPM-AKT-1', cat: 'DPM', dapil: 'S1 Akuntansi', name: 'Calon 01 DPM - S1 Akuntansi', votes: 0 },
-        { id: 'DPM-ISP-1', cat: 'DPM', dapil: 'S1 ISP', name: 'Calon 01 DPM - S1 ISP', votes: 0 },
-        { id: 'DPM-D3M-1', cat: 'DPM', dapil: 'D3 Manajemen Pemasaran', name: 'Calon 01 DPM - D3 Manajemen Pemasaran', votes: 0 },
-        { id: 'DPM-D4ISP-1', cat: 'DPM', dapil: 'D4 ISP', name: 'Calon 01 DPM - D4 ISP', votes: 0 }
-      ],
+      dpt: [],
+      candidates: [],
       totalVotes: 0,
       activeVoter: null,
+      activeToken: '',
       pickedBem: null,
       pickedDpm: null,
       editingCandId: null
     };
+
+    async function callApi(payload) {
+      if (!GAS_WEBAPP_URL || GAS_WEBAPP_URL.includes('PASTE_URL')) {
+        throw new Error('URL Google Apps Script belum dipasang di index.html.');
+      }
+      const res = await fetch(GAS_WEBAPP_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      });
+      return await res.json();
+    }
 
     function showVoterErr(msg) {
       const el = document.getElementById('voterErr');
@@ -553,7 +533,7 @@
       el.style.display = 'block';
     }
 
-    function openSuperAdminPrompt() {
+    async function openSuperAdminPrompt() {
       const code = prompt('Masukkan Kode Rahasia Super Admin:');
       if (code === null) return;
       if (code.trim() === state.adminCode) {
@@ -562,9 +542,22 @@
         const adm = document.getElementById('adminView');
         adm.style.display = 'flex';
         adm.classList.add('flex');
-        renderAdmin();
+        await syncAdminData();
       } else {
         alert('Kode Super Admin salah!');
+      }
+    }
+
+    async function syncAdminData() {
+      try {
+        const data = await callApi({ action: 'getAdminData' });
+        if (!data.ok) return alert(data.message || 'Gagal memuat data.');
+        state.dpt = data.dpt || [];
+        state.candidates = data.candidates || [];
+        state.totalVotes = data.totalVotes || 0;
+        renderAdmin();
+      } catch (err) {
+        alert('Gagal terhubung ke Google Sheets: ' + err.message);
       }
     }
 
@@ -588,7 +581,7 @@
       if (!val) return alert('Kode tidak boleh kosong!');
       state.adminCode = val;
       document.getElementById('newAdminCode').value = '';
-      alert('Kode Super Admin berhasil diperbarui!');
+      alert('Kode Super Admin berhasil diperbarui untuk sesi ini!');
     }
 
     function generateRandomToken() {
@@ -601,7 +594,7 @@
       document.getElementById('inToken').value = token;
     }
 
-    function addDpt() {
+    async function addDpt() {
       const nim = document.getElementById('inNim').value.trim().toUpperCase();
       const nama = document.getElementById('inNama').value.trim();
       const prodi = document.getElementById('inProdi').value;
@@ -611,22 +604,38 @@
         generateRandomToken();
         token = document.getElementById('inToken').value.trim();
       }
-      state.dpt.push({ nim, nama, prodi, token, status: 'Belum Memilih' });
-      document.getElementById('inNim').value = '';
-      document.getElementById('inNama').value = '';
-      document.getElementById('inToken').value = '';
-      renderAdmin();
+
+      const btn = document.getElementById('btnAddDpt');
+      btn.disabled = true;
+      btn.innerText = 'Menyimpan...';
+      try {
+        const res = await callApi({ action: 'addDpt', nim, nama, prodi, token });
+        if (!res.ok) return alert(res.message);
+        state.dpt = res.dpt;
+        state.candidates = res.candidates;
+        state.totalVotes = res.totalVotes;
+        document.getElementById('inNim').value = '';
+        document.getElementById('inNama').value = '';
+        document.getElementById('inToken').value = '';
+        renderAdmin();
+      } catch (err) {
+        alert(err.message);
+      } finally {
+        btn.disabled = false;
+        btn.innerText = '+ Tambah Pemilih ke Sheets';
+      }
     }
 
     function exportDptToExcel() {
       if (!state.dpt.length) return alert('Belum ada data DPT untuk diekspor.');
-      const headers = ['NIM', 'Nama', 'Jurusan', 'Token', 'Status'];
+      const headers = ['NIM', 'Nama', 'Jurusan', 'Token', 'Status', 'Waktu Memilih'];
       const rows = state.dpt.map(v => [
         `"${String(v.nim).replace(/"/g, '""')}"`,
         `"${String(v.nama).replace(/"/g, '""')}"`,
         `"${String(v.prodi).replace(/"/g, '""')}"`,
         `"${String(v.token).replace(/"/g, '""')}"`,
-        `"${String(v.status).replace(/"/g, '""')}"`
+        `"${String(v.status).replace(/"/g, '""')}"`,
+        `"${String(v.waktu || '-').replace(/"/g, '""')}"`
       ].join(';'));
       const csvContent = '\uFEFF' + [headers.join(';'), ...rows].join('\r\n');
       const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -640,21 +649,29 @@
       URL.revokeObjectURL(url);
     }
 
-    function addCandidate() {
+    async function addCandidate() {
       const cat = document.getElementById('addCandCat').value;
       const dapil = document.getElementById('addCandDapil').value;
       const name = document.getElementById('addCandName').value.trim();
       if (!name) return alert('Isi nama paslon atau kandidat terlebih dahulu!');
-      const newId = 'CAND-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
-      state.candidates.push({
-        id: newId,
-        cat,
-        dapil: cat === 'BEM' ? 'SEMUA' : dapil,
-        name,
-        votes: 0
-      });
-      document.getElementById('addCandName').value = '';
-      renderAdmin();
+
+      const btn = document.getElementById('btnAddCand');
+      btn.disabled = true;
+      btn.innerText = 'Menyimpan...';
+      try {
+        const res = await callApi({ action: 'addCandidate', cat, dapil, name });
+        if (!res.ok) return alert(res.message);
+        state.dpt = res.dpt;
+        state.candidates = res.candidates;
+        state.totalVotes = res.totalVotes;
+        document.getElementById('addCandName').value = '';
+        renderAdmin();
+      } catch (err) {
+        alert(err.message);
+      } finally {
+        btn.disabled = false;
+        btn.innerText = '+ Tambah Kandidat';
+      }
     }
 
     function startEditCandidate(id) {
@@ -672,17 +689,30 @@
       document.getElementById('editCandBox').classList.add('hidden');
     }
 
-    function saveEditedCandidate() {
+    async function saveEditedCandidate() {
       if (!state.editingCandId) return;
-      const cand = state.candidates.find(c => c.id === state.editingCandId);
-      if (!cand) return;
-      const newName = document.getElementById('editName').value.trim();
-      if (!newName) return alert('Nama kandidat tidak boleh kosong!');
-      cand.cat = document.getElementById('editCat').value;
-      cand.dapil = cand.cat === 'BEM' ? 'SEMUA' : document.getElementById('editDapil').value;
-      cand.name = newName;
-      cancelEditCandidate();
-      renderAdmin();
+      const cat = document.getElementById('editCat').value;
+      const dapil = document.getElementById('editDapil').value;
+      const name = document.getElementById('editName').value.trim();
+      if (!name) return alert('Nama kandidat tidak boleh kosong!');
+
+      const btn = document.getElementById('btnSaveCand');
+      btn.disabled = true;
+      btn.innerText = 'Menyimpan...';
+      try {
+        const res = await callApi({ action: 'editCandidate', id: state.editingCandId, cat, dapil, name });
+        if (!res.ok) return alert(res.message);
+        state.dpt = res.dpt;
+        state.candidates = res.candidates;
+        state.totalVotes = res.totalVotes;
+        cancelEditCandidate();
+        renderAdmin();
+      } catch (err) {
+        alert(err.message);
+      } finally {
+        btn.disabled = false;
+        btn.innerText = 'Simpan Perubahan';
+      }
     }
 
     function getCandidatePercentage(cand) {
@@ -699,7 +729,7 @@
       }
     }
 
-    function voterLogin() {
+    async function voterLogin() {
       document.getElementById('voterErr').style.display = 'none';
       const nim = document.getElementById('loginNim').value.trim().toUpperCase();
       const token = document.getElementById('loginToken').value.trim();
@@ -708,46 +738,54 @@
         return showVoterErr('Silakan isi NIM dan Kode Token terlebih dahulu.');
       }
 
-      const found = state.dpt.find(v => v.nim.toUpperCase() === nim && v.token === token);
-      if (!found) {
-        return showVoterErr('NIM atau Kode Token tidak ditemukan / belum terdaftar di DPT.');
-      }
-      if (found.status === 'Sudah Memilih') {
-        return showVoterErr('NIM ini sudah menggunakan hak pilihnya.');
-      }
+      const btn = document.getElementById('btnVoterLogin');
+      btn.disabled = true;
+      btn.innerText = 'MEMERIKSA DPT...';
 
-      state.activeVoter = found;
-      state.pickedBem = null;
-      state.pickedDpm = null;
+      try {
+        const res = await callApi({ action: 'loginVoter', nim, token });
+        if (!res.ok) {
+          return showVoterErr(res.message || 'Gagal memverifikasi data pemilih.');
+        }
 
-      document.getElementById('bNama').innerText = found.nama;
-      document.getElementById('bNim').innerText = found.nim;
-      document.getElementById('bProdi').innerText = found.prodi;
-      document.getElementById('bDapilLabel').innerText = found.prodi;
+        state.activeVoter = res.voter;
+        state.activeToken = token;
+        state.pickedBem = null;
+        state.pickedDpm = null;
 
-      const bemList = state.candidates.filter(c => c.cat === 'BEM');
-      document.getElementById('bemCards').innerHTML = bemList.map(c =>
-        `<div class="cand-card" id="bem-${c.id}" onclick="selectCand('BEM', '${c.id}')">
-          <div style="font-weight:700;font-size:15px;">${c.name}</div>
-          <div style="font-size:12px;color:#64748b;margin-top:4px;">Pemilihan BEM FEB-UNTAD</div>
-        </div>`
-      ).join('');
+        document.getElementById('bNama').innerText = res.voter.nama;
+        document.getElementById('bNim').innerText = res.voter.nim;
+        document.getElementById('bProdi').innerText = res.voter.prodi;
+        document.getElementById('bDapilLabel').innerText = res.voter.prodi;
 
-      const dpmList = state.candidates.filter(c => c.cat === 'DPM' && c.dapil === found.prodi);
-      if (dpmList.length === 0) {
-        state.pickedDpm = 'KOTAK_KOSONG';
-        document.getElementById('dpmCards').innerHTML = `<div class="cand-card selected"><strong>Kotak Kosong</strong><div style="font-size:12px;color:#64748b;">Belum ada calon DPM terdaftar di jurusan ${found.prodi}</div></div>`;
-      } else {
-        document.getElementById('dpmCards').innerHTML = dpmList.map(c =>
-          `<div class="cand-card" id="dpm-${c.id}" onclick="selectCand('DPM', '${c.id}')">
+        document.getElementById('bemCards').innerHTML = (res.bem || []).map(c =>
+          `<div class="cand-card" id="bem-${c.id}" onclick="selectCand('BEM', '${c.id}')">
             <div style="font-weight:700;font-size:15px;">${c.name}</div>
-            <div style="font-size:12px;color:#64748b;margin-top:4px;">Jurusan ${c.dapil}</div>
+            <div style="font-size:12px;color:#64748b;margin-top:4px;">Pemilihan BEM FEB-UNTAD</div>
           </div>`
         ).join('');
-      }
 
-      document.getElementById('voterLoginView').style.display = 'none';
-      document.getElementById('boothView').style.display = 'block';
+        const dpmList = res.dpm || [];
+        if (dpmList.length === 0) {
+          state.pickedDpm = 'KOTAK_KOSONG';
+          document.getElementById('dpmCards').innerHTML = `<div class="cand-card selected"><strong>Kotak Kosong</strong><div style="font-size:12px;color:#64748b;">Belum ada calon DPM terdaftar di jurusan ${res.voter.prodi}</div></div>`;
+        } else {
+          document.getElementById('dpmCards').innerHTML = dpmList.map(c =>
+            `<div class="cand-card" id="dpm-${c.id}" onclick="selectCand('DPM', '${c.id}')">
+              <div style="font-weight:700;font-size:15px;">${c.name}</div>
+              <div style="font-size:12px;color:#64748b;margin-top:4px;">Jurusan ${c.dapil}</div>
+            </div>`
+          ).join('');
+        }
+
+        document.getElementById('voterLoginView').style.display = 'none';
+        document.getElementById('boothView').style.display = 'block';
+      } catch (err) {
+        showVoterErr('Koneksi gagal: ' + err.message);
+      } finally {
+        btn.disabled = false;
+        btn.innerText = 'BUKA SURAT SUARA SAYA →';
+      }
     }
 
     function selectCand(cat, id) {
@@ -762,25 +800,34 @@
       }
     }
 
-    function confirmVote() {
+    async function confirmVote() {
       if (!state.pickedBem || !state.pickedDpm) {
         return alert('Silakan pilih calon BEM dan calon DPM terlebih dahulu!');
       }
       if (!confirm('Kirim dan sahkan pilihan Anda sekarang? Pilihan tidak dapat diubah.')) return;
 
-      const bemObj = state.candidates.find(c => c.id === state.pickedBem);
-      if (bemObj) bemObj.votes += 1;
+      const btn = document.getElementById('btnConfirmVote');
+      btn.disabled = true;
+      btn.innerText = 'MENGIRIM SUARA...';
 
-      if (state.pickedDpm !== 'KOTAK_KOSONG') {
-        const dpmObj = state.candidates.find(c => c.id === state.pickedDpm);
-        if (dpmObj) dpmObj.votes += 1;
+      try {
+        const res = await callApi({
+          action: 'submitVote',
+          nim: state.activeVoter.nim,
+          token: state.activeToken,
+          bemId: state.pickedBem,
+          dpmId: state.pickedDpm
+        });
+        if (!res.ok) return alert(res.message);
+
+        alert('Terima kasih! Suara Anda berhasil dicatat ke database dan token otomatis terkunci.');
+        exitBooth();
+      } catch (err) {
+        alert('Gagal mengirim suara: ' + err.message);
+      } finally {
+        btn.disabled = false;
+        btn.innerText = 'SAHKAN & KIRIM SUARA';
       }
-
-      state.activeVoter.status = 'Sudah Memilih';
-      state.totalVotes += 1;
-
-      alert('Terima kasih! Suara Anda berhasil dicatat dan token otomatis terkunci.');
-      exitBooth();
     }
 
     function exitBooth() {
@@ -826,7 +873,7 @@
       }).join('');
 
       document.getElementById('aDptBody').innerHTML = state.dpt.map(v =>
-        `<tr><td>${v.nim}</td><td>${v.nama}</td><td>${v.prodi}</td><td>${v.token}</td><td>${v.status}</td></tr>`
+        `<tr><td>${v.nim}</td><td>${v.nama}</td><td>${v.prodi}</td><td>${v.token}</td><td>${v.status}</td><td>${v.waktu || '-'}</td></tr>`
       ).join('');
 
       document.getElementById('aCandBody').innerHTML = state.candidates.map(c =>
