@@ -714,7 +714,23 @@
         btn.innerText = 'Simpan Perubahan';
       }
     }
+async function deleteCandidate(id) {
+      const cand = state.candidates.find(c => c.id === id);
+      const label = cand ? `${cand.name} (${cand.cat})` : 'kandidat ini';
+      if (!confirm(`Yakin ingin menghapus ${label} dari daftar kandidat?`)) return;
 
+      try {
+        const res = await callApi({ action: 'deleteCandidate', id });
+        if (!res.ok) return alert(res.message || 'Gagal menghapus kandidat.');
+        state.dpt = res.dpt;
+        state.candidates = res.candidates;
+        state.totalVotes = res.totalVotes;
+        if (state.editingCandId === id) cancelEditCandidate();
+        renderAdmin();
+      } catch (err) {
+        alert('Gagal menghapus kandidat: ' + err.message);
+      }
+    }
     function getCandidatePercentage(cand) {
       if (cand.cat === 'BEM') {
         const poolTotal = state.candidates
@@ -881,7 +897,10 @@
           <td>${c.cat}</td>
           <td>${c.dapil}</td>
           <td>${c.name}</td>
-          <td><button type="button" class="btn btn-outline-red btn-sm" onclick="startEditCandidate('${c.id}')">Edit</button></td>
+          <td style="white-space:nowrap;">
+            <button type="button" class="btn btn-outline-red btn-sm" onclick="startEditCandidate('${c.id}')">Edit</button>
+            <button type="button" class="btn btn-secondary btn-sm" style="margin-left:6px;" onclick="deleteCandidate('${c.id}')">Hapus</button>
+          </td>
         </tr>`
       ).join('');
     }
